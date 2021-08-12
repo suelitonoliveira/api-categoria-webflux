@@ -1,11 +1,9 @@
 package com.apiwebfluxibm.webfluxibm.dto;
 
-import com.apiwebfluxibm.webfluxibm.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 import java.io.Serializable;
 
