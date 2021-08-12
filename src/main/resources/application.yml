@@ -2,3 +2,4 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://testemongodb:testemongodb@cluster0.x6qjt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+      #uri: mongodb://localhost:27017/webfluxDB

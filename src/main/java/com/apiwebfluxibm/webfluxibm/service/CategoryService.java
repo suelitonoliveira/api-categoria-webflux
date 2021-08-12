@@ -3,6 +3,8 @@ package com.apiwebfluxibm.webfluxibm.service;
 import com.apiwebfluxibm.webfluxibm.model.Category;
 import com.apiwebfluxibm.webfluxibm.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,25 +14,22 @@ import reactor.core.publisher.Mono;
 
 
 @Service
-@AllArgsConstructor
-public class CategoryService {
+public class CategoryService{
 
-
-    private final CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public Flux<Category> findAll() {
         return categoryRepository.findAll();
     }
 
-    public Mono<Category> findById(Long id) {
-        return  categoryRepository.findById(id)
-                .switchIfEmpty(monoResponseStatusNotFoundException());
+    public Mono<Category> findById(String id) {
+        return  categoryRepository.findById(id).switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     public <T> Mono<T> monoResponseStatusNotFoundException() {
         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     }
-
 
     @Transactional
     public Mono<Category> save(Category category) {
@@ -38,17 +37,15 @@ public class CategoryService {
 
     }
 
-
     @Transactional
     public Mono<Category> update(Category category) {
         findById(category.getId());
         return categoryRepository.save(category);
     }
 
-    @Transactional
-    public void delete(Long id) {
-        findById(id);
-             categoryRepository.deleteById(id);
+    public Mono<Void> delete(String id) {
+        return findById(id)
+                .flatMap(categoryRepository::delete);
      }
 
 }
