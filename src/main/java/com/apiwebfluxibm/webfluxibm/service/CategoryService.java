@@ -39,8 +39,10 @@ public class CategoryService{
 
     @Transactional
     public Mono<Category> update(Category category) {
-        findById(category.getId());
-        return categoryRepository.save(category);
+          return categoryRepository.
+                  findById(category.getId())
+                          .map(c -> new Category(category.getId(), category.getName()))
+                                  .flatMap(categoryRepository::save);
     }
 
     public Mono<Void> delete(String id) {
@@ -49,3 +51,5 @@ public class CategoryService{
      }
 
 }
+
+

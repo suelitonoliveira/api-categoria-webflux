@@ -19,6 +19,9 @@
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<lombok.version>1.18.20</lombok.version>
+		<springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+		<springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
+		<springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -65,6 +68,12 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>${springfox-boot-starter.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

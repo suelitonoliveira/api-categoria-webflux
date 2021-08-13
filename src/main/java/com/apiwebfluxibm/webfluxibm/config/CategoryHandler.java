@@ -1,7 +1,8 @@
-/*
+
 package com.apiwebfluxibm.webfluxibm.config;
 
 import com.apiwebfluxibm.webfluxibm.dto.CategoryRequestDTO;
+import com.apiwebfluxibm.webfluxibm.mapper.CategoryMapper;
 import com.apiwebfluxibm.webfluxibm.model.Category;
 import com.apiwebfluxibm.webfluxibm.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,6 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-
-import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
-
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 
@@ -22,6 +20,9 @@ public class CategoryHandler {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public Mono<ServerResponse> findAll(ServerRequest request){
         return ok()
@@ -44,19 +45,29 @@ public class CategoryHandler {
     }
 
     public Mono<ServerResponse> save(ServerRequest request){
-        final Mono<Category> categoryMono = request.bodyToMono(Category.class);
-        final Mono<ServerResponse> body = ok()
+        final Mono<CategoryRequestDTO> categoryMono = categoryMapper.categoryRequestDTOToCategory(request.bodyToMono(Category.class));
+       return  ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(categoryMono.flatMap(categoryService::save), Category.class));
-        return body;
+                .body(categoryMono
+                        .map(c -> new Category(
+                                c.getId(),
+                                c.getName()
+                        ))
+                        .flatMap(categoryService::save), CategoryRequestDTO.class);
+
     }
 
     public Mono<ServerResponse> update(ServerRequest request){
-        final Mono<Category> categoryMono = request.bodyToMono(Category.class);
-        return ok()
+        final Mono<CategoryRequestDTO> categoryMono = categoryMapper.categoryRequestDTOToCategory(request.bodyToMono(Category.class));
+        return  ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(categoryMono.flatMap(categoryService::update), Category.class));
+                .body(categoryMono
+                        .map(c -> new Category(
+                                c.getId(),
+                                c.getName()
+                        ))
+                        .flatMap(categoryService::save), CategoryRequestDTO.class);
     }
 
 }
-*/
+

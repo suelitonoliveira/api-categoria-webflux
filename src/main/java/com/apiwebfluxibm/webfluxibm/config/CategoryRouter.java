@@ -1,4 +1,3 @@
-/*
 package com.apiwebfluxibm.webfluxibm.config;
 
 import org.springframework.context.annotation.Bean;
@@ -29,4 +28,4 @@ public class CategoryRouter {
     }
 
 }
-*/
+
