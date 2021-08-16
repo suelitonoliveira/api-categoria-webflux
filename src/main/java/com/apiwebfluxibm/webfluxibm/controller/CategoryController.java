@@ -57,6 +57,11 @@ public class CategoryController {
         return  categoryMapper.categoryRequestDTOToCategory(categoryService.findById(id));
     }
 
+    @GetMapping("/category/name/{name}")
+    public Flux<CategoryRequestDTO> findByName(@PathVariable String name) {
+        return  categoryMapper.categoriesRequestDTOToCategories(categoryService.findByName(name));
+    }
+
     @PostMapping("/category")
     @ApiOperation(value = "Adiciona uma Categoria")
     @ApiResponses(value = {

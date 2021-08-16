@@ -1,4 +1,3 @@
-/*
 
 package com.apiwebfluxibm.webfluxibm.config;
 
@@ -38,6 +37,13 @@ public class CategoryHandler {
                 .body(categoryService.findById(id), CategoryRequestDTO.class);
     }
 
+    public Mono<ServerResponse> findByName(ServerRequest request){
+        String name = request.pathVariable("name");
+        return ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(categoryService.findByName(name), CategoryRequestDTO.class);
+    }
+
     public Mono<ServerResponse> delete(ServerRequest request){
         String id = request.pathVariable("id");
         return ok()
@@ -72,4 +78,3 @@ public class CategoryHandler {
 
 }
 
-*/

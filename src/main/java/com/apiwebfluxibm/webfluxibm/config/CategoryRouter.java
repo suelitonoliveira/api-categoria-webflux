@@ -24,7 +24,8 @@ public class CategoryRouter {
                 .andRoute(GET("/category/{id}").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::findById)
                 .andRoute(DELETE("/category/{id}").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::delete)
                 .andRoute(POST("/category").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::save)
-                .andRoute(PUT("/category").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::update);
+                .andRoute(PUT("/category").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::update)
+                .andRoute(GET("/category/name/{name}").and(accept(MediaType.APPLICATION_JSON)), categoryHandler::findByName);
 
     }
 

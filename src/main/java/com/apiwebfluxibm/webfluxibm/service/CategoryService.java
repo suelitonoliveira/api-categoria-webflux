@@ -27,6 +27,11 @@ public class CategoryService{
         return  categoryRepository.findById(id).switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
+    public Flux<Category> findByName(String name) {
+        return  categoryRepository.findByNameContainingIgnoreCase(name);
+    }
+
+
     public <T> Mono<T> monoResponseStatusNotFoundException() {
         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     }
