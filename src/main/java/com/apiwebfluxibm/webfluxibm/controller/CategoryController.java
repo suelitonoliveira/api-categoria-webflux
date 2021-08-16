@@ -58,6 +58,13 @@ public class CategoryController {
     }
 
     @GetMapping("/category/name/{name}")
+    @ApiOperation(value = "Buscar por nome de categoria")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Algum problema na requisição"),
+            @ApiResponse(code = 404, message = "Categoria Não existe"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção de sistema"),
+    })
     public Flux<CategoryRequestDTO> findByName(@PathVariable String name) {
         return  categoryMapper.categoriesRequestDTOToCategories(categoryService.findByName(name));
     }
